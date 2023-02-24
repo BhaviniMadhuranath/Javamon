@@ -20,6 +20,20 @@ Once the player has won three battles, they face off against a powerful boss ene
 
 Overall, this turn-based battle game provides players with a challenging and engaging gameplay experience, with diverse characters, randomized battles, and various difficulty modes to keep players coming back for more.
 
+---
+
+### Tech Stack
+
+frontend - JavaScript Framework
+
+backend - Java with Spring
+
+database - MongoDB
+
+---
+
 ### Future scope
 
 The same can be extended to play in multiplayer mode, where the players can choose their characters and battle amongst themselves. Futher levels with varying difficulty can also be generated. 
+
+---
