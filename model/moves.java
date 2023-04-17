@@ -1,6 +1,6 @@
 package Javamon.model;
 
-public interface moves {
+public interface Moves {
   /*
    * variables to be implemented in each class
    * hp - gives the total hp of the character
@@ -9,7 +9,7 @@ public interface moves {
    * atk_pow - attribute that decides how much hp it can reduce from the opponent
    */
   // passing the attack strength of the attacker as an argument and altering the hp of the attacked
-  public default void attack(int atk) {
+  public default void receive_attack(int atk) {
     if (atk > this.buffer) {
       atk -= this.buffer;
       this.hp = this.hp - atk;
@@ -21,7 +21,11 @@ public interface moves {
     this.buffer = 0;
   }
 
-  public default int defend() {
+  public default int launch_attack() {
+    return this.atk_pow;
+  }
+
+  public default void defend() {
     this.buffer = this.def_pow;
   }
 
