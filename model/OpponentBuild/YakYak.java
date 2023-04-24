@@ -9,7 +9,6 @@ public class YakYak implements Moves {
   int atk_pow;
   int hp;
 
-  @Override
   public int check_attr(int attr) {
     if (this.attribute == 0 && attr == 1) {
       return 5;
@@ -22,7 +21,6 @@ public class YakYak implements Moves {
     return 0;
   }
 
-  @Override
   public void receive_attack(int atk, int attr) {
     int factor = check_attr(attr);
     atk = atk + factor;
@@ -30,12 +28,10 @@ public class YakYak implements Moves {
     // buffer resets to zero after the round regardless of amount used
   }
 
-  @Override
   public void special(int opt) {
     System.out.println("Does not have special powers");
   }
 
-  @Override
   public void defend() {
     System.out.println("Does not have defensive powers");
   }
