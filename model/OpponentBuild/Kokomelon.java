@@ -10,8 +10,7 @@ public class Kokomelon implements Moves {
   // int buffer;
   int hp;
 
-  @Override
-  int check_attr(int attr) {
+  public int check_attr(int attr) {
     if (this.attribute == 0 && attr == 1) {
       return 5;
     } else if (this.attribute == 1 && attr == 2) {
@@ -23,49 +22,35 @@ public class Kokomelon implements Moves {
     return 0;
   }
 
-  @Override
   public void receive_attack(int atk, int attr) {
     int factor = check_attr(attr);
     atk = atk + factor;
-    if (atk > this.buffer) {
-      atk -= this.buffer;
-      this.hp = this.hp - atk;
-    } else {
-      this.buffer -= atk;
-      System.out.println("defence used");
-    }
+    this.hp = this.hp - atk;
     // buffer resets to zero after the round regardless of amount used
-    this.buffer = 0;
   }
 
-  @Override
-  public void special() {
+  public void special(int opt) {
     System.out.println("Does not have special powers");
   }
 
-  @Override
-  public void receive_attack(int atk) {
-    this.hp -= atk;
-  }
-
-  @Override
   public void defend() {
     System.out.println("Does not have defensive powers");
   }
-  public default int get_hp() {
+
+  public int get_hp() {
     return this.hp;
   }
 
-  public default int get_def_pow() {
-    return this.def_pow;
+  public int get_def_pow() {
+    return -1;
+  }
+
+  public int launch_attack() {
+    return this.atk_pow;
   }
 
   // change default later
-  public default void defend() {
-    this.buffer = this.def_pow;
-  }
-
-  public default String get_name() {
+  public String get_name() {
     return this.name;
   }
 
