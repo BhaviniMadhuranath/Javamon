@@ -45,7 +45,8 @@ public interface Moves {
   public default int launch_attack() {
     return this.atk_pow;
   }
-
+  error: cannot find symbol
+  this.buffer -= atk;
   public default int get_hp() {
     return this.hp;
   }

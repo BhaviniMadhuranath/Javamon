@@ -1,6 +1,6 @@
 package Javamon.view;
-import Javamon.model.Moves;
-import Javamon.model.OpponentBuild.OpponentFactory;
+// import Javamon.model.Moves;
+// import Javamon.model.OpponentBuild.OpponentFactory;
 
 import java.awt.Color;
 import java.awt.Container;
@@ -31,7 +31,7 @@ public class GameLoop {
 	Font titleFont = new Font("Times New Roman", Font.PLAIN, 90);
 	Font normalFont = new Font("Times New Roman", Font.PLAIN, 28);
 	JButton startButton, choice1, choice2, choice3, choice4;
-    String position;
+    String position = "menu";
     JTextArea mainTextArea;
     JTextField inputTextField;
     TitleScreenHandler tsHandler = new TitleScreenHandler();
@@ -41,8 +41,10 @@ public class GameLoop {
     int score;
     String name;
     static int boss_defeated = 0;
-
     
+
+
+
 
     public GameLoop()
     {
@@ -221,9 +223,9 @@ public class GameLoop {
             playerLabelName.setText(name);
             hpLabelNumber.setText("100");
 
-            OpponentFactory opponentFactory = new OpponentFactory();
-            Moves newOpponent = opponentFactory.getOpponent(1);
-            System.out.println(newOpponent.get_name());
+            // OpponentFactory opponentFactory = new OpponentFactory();
+            // Moves newOpponent = opponentFactory.getOpponent(1);
+            // System.out.println(newOpponent.get_name());
         }
     }
 
@@ -236,28 +238,34 @@ public class GameLoop {
 		choice4.setText(c4);
     }
 
+    public void selectJavamon(String javamon_name)
+    {
+        // initialize selected javamon to player
+        position = "Game";
+    }
 
     public class ChoiceHandler implements ActionListener{
 		
 		public void actionPerformed(ActionEvent event){
-			
-			String yourChoice = event.getActionCommand();
-			switch(yourChoice){
-                case "c1":
-                    mainTextArea.setText("Hi! Welcome to the game. I'm rohith. Please select a pokemon");
+
+            String yourChoice = event.getActionCommand();
+            position = "Menu";
+			switch(position){
+                case "Menu" : 
+                    mainTextArea.setText("Hi! Welcome to the game. I'm rohith. Please select a javamon.");
                     setOptions("Squirtle", "Chamander", "Gogul", ".");
+                    selectJavamon(yourChoice);	
                     break;
-                case "c2":
-                    mainTextArea.setText("Hi! Welcome to the game. I'm not rohith and I'm not a tutorial");
-                    setOptions("Start Game", "Tutorial", "Take a piss", "Quit");
-                    break;
-                case "c3":
-                    break;
-                case "c4":
+                case "Quit" : 
                     window.dispose();
-                    // window.setVisible(false);
                     break;
-            }			
+                case "Game": 
+                    while(boss_defeated != 0){
+
+                    }
+                    break; 
+            }
+			
 		}
 	}
 
