@@ -21,7 +21,6 @@ public class Villain implements Moves {
     power_up = 2;
   }
 
-  @Override
   public int check_attr(int attr) {
     if (this.attribute == 0 && attr == 1) {
       return 5;
@@ -35,7 +34,6 @@ public class Villain implements Moves {
   }
 
   // passing the attack strength of the attacker as an argument and altering the hp of the attacked
-  @Override
   public void receive_attack(int atk, int attr) {
     int factor = check_attr(attr);
     atk = atk + factor;
@@ -50,33 +48,27 @@ public class Villain implements Moves {
     this.buffer = 0;
   }
 
-  @Override
   public int launch_attack() {
     return this.atk_pow;
   }
 
-  @Override
   public int get_hp() {
     return this.hp;
   }
 
-  @Override
   public int get_def_pow() {
     return this.def_pow;
   }
 
-  @Override
   // change default later
   public void defend() {
     this.buffer = this.def_pow;
   }
 
-  @Override
   public String get_name() {
     return this.name;
   }
 
-  @Override
   public void special(int opt) {
     // this increases the attack power of the villain
     this.atk_pow += this.power_up;
