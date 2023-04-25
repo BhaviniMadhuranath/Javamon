@@ -46,7 +46,7 @@ public class GameLoop {
     static int boss_defeated = 0;
     
 
-
+    static Moves newOpponent;
 
 
     public GameLoop()
@@ -258,8 +258,6 @@ public class GameLoop {
         System.out.println(newOpponent.get_name()); 
     }
 
-    OpponentFactory opponentFactory = new OpponentFactory();
-    Moves newOpponent = opponentFactory.getOpponent(1);
 
     public void playerMove()
     {
@@ -279,22 +277,9 @@ public class GameLoop {
         {
             mainTextArea.setText("Your opponent has been defeated. Nice job!");
             setOptions("Continue", "Continue", "Continue", "Continue");
+            position = "get reward";
         }
-        // if(newOpponent.get_hp() > 0)
-        // {
-            // switch(yourChoice)
-            // {
-            //     case "Attack":
-            //         newOpponent.receive_attack(10, 0);
-            //         break;
-            //     case "Defend":
-            //         break;
-            //     case "Use Item":
-            //         break;
-            //     case "Run away":
-            //         break;
-            // }
-        // }
+
     }
 
     public void opponentMove(){}
@@ -304,7 +289,6 @@ public class GameLoop {
 		public void actionPerformed(ActionEvent event)
         {
             String yourChoice = event.getActionCommand();
-            
             position = "Menu";
             switch(position)
             {
@@ -333,18 +317,21 @@ public class GameLoop {
                     }
                     position = "player turn";
                     break;
-                case "player turn": 
-                    switch(yourChoice)
+                case "player turn":
+                    if(newOpponent.get_hp() > 0)
                     {
-                        case "Attack":
-                            newOpponent.receive_attack(10, 0);
-                            break;
-                        case "Defend":
-                            break;
-                        case "Use Item":
-                            break;
-                        case "Run away":
-                            break;
+                        switch(yourChoice)
+                        {
+                            case "Attack":
+                                newOpponent.receive_attack(10, 0);
+                                break;
+                            case "Defend":
+                                break;
+                            case "Use Item":
+                                break;
+                            case "Run away":
+                                break;
+                        }
                     }
                 case "opponent turn":
                     opponentMove();
@@ -355,6 +342,8 @@ public class GameLoop {
 
     public static void main(String[] args) 
     {
+        OpponentFactory opponentFactory = new OpponentFactory();
+        newOpponent = opponentFactory.getOpponent(1);
 		new GameLoop();
 	}
 }
