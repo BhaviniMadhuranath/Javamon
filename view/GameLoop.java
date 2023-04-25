@@ -1,5 +1,7 @@
 package Javamon.view;
 import Javamon.model.Moves;
+import Javamon.model.JavamonBuild.Javamon;
+import Javamon.model.JavamonBuild.MainJavamon;
 import Javamon.model.OpponentBuild.OpponentFactory;
 
 import java.awt.Color;
@@ -8,6 +10,7 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.logging.Level;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -40,14 +43,13 @@ public class GameLoop {
 	ChoiceHandler choiceHandler = new ChoiceHandler();
     
     String position = "menu";
-    static int level;
+    static int level = 1;
     int score;
     String name;
     static int boss_defeated = 0;
     
-
     static Moves newOpponent;
-
+    static MainJavamon newJavamon;
 
     public GameLoop()
     {
@@ -179,18 +181,6 @@ public class GameLoop {
         hpLabelNumber.setForeground(Color.white);
         playerPanel.add(hpLabelNumber);
 
-        // weaponLabel = new JLabel("Weapon:");
-        // weaponLabel.setFont(normalFont);
-        // weaponLabel.setForeground(Color.white);
-        // weaponLabel.setBackground(Color.red);
-        // playerPanel.add(weaponLabel);
-
-        // weaponLabelName = new JLabel();
-        // weaponLabelName.setFont(normalFont);
-        // weaponLabelName.setForeground(Color.white);
-        // playerPanel.add(weaponLabelName);
-
-
         playerLabel = new JLabel("Name: ");
         playerLabel.setFont(normalFont);
         playerLabel.setForeground(Color.white);
@@ -207,134 +197,199 @@ public class GameLoop {
     void initialize() {
         level = 1;
         score = 0;
-        // Player p = new Player();
-        // p.initialize();
+        selectJavamon();
     }
 
-    void setVillian(int level)
+    public void selectJavamon()
     {
-        // Villian v = new Villian();
-        // v.initialize();
-        System.out.print("Villain has been created");;
+        position = "Menu";
+        mainTextArea.setText("Hi! Welcome to the game. I'm rohith. \nYour First Javamon is " + newJavamon.getJavamon().getName());;
+        choice1.setText("Continue");
+        choice2.setVisible(false);
+        choice3.setVisible(false);
+        choice4.setVisible(false);
+        // choice2.setText("Chamander");
+        // choice3.setText("Gogle");
+        // choice4.setText(".");
     }
 
+    public void playerMove()
+    {
+            position = "player turn";
+            // System.out.println(newOpponent.get_hp());
+        
+            mainTextArea.setText("Your javamon is "+newJavamon.get_name()+"\nYour opponent is " + newOpponent.get_name() +"\n Opponent Health:" + newOpponent.get_hp() +"\n Choose a move");
+            choice1.setText("Attack");
+            choice2.setText("Defend");
+            choice3.setText("Use Item");
+            choice4.setText("Run away");
+            // newOpponent.receive_attack(10, 0);
+            System.out.println(newOpponent.get_hp());    
+    }
+
+    public void playerAttack()
+    {
+        position = "player turn";
+
+        mainTextArea.setText("Your javamon is "+newJavamon.get_name()+"\nYour opponent is " + newOpponent.get_name() +"\n Opponent Health:" + newOpponent.get_hp() +"\n Choose a move");
+        choice1.setText("Attack");
+        choice2.setText("Defend");
+        choice3.setText("Use Item");
+        choice4.setText("Run away");
+    }
+
+    public void playerDefend()
+    {
+        position = "player defend";
+        newJavamon.defend();
+        mainTextArea.setText("Your javamon is "+newJavamon.get_name()+"\nYour opponent is " + newOpponent.get_name() +"\n Opponent Health:" + newOpponent.get_hp() +"\n You defended \nChoose a move");
+        choice1.setText("Attack");
+        choice2.setText("Defend");
+        choice3.setText("Use Item");
+        choice4.setText("Run away");
+    }
+
+    
+    public void opponentTurn()
+    {
+        position = "opponent turn";
+        int atk = newOpponent.launch_attack();
+        int playerHealth = newJavamon.getJavamon().getHP();
+        playerHealth -= atk;
+        newJavamon.getJavamon().setHP(playerHealth);
+        hpLabelNumber.setText("" + newJavamon.getJavamon().getHP());
+        if(playerHealth > 0){
+            mainTextArea.setText("Your javamon is "+newJavamon.get_name()+"\nYour opponent is " + newOpponent.get_name() +"\n Opponent Health:" + newOpponent.get_hp() +"\nYour opponent attacked you!"+"\n Choose a move");
+            choice1.setText("Continue");
+            choice2.setVisible(false);
+            choice3.setVisible(false);
+            choice4.setVisible(false);
+        }
+        else {
+            mainTextArea.setText("You have been defeated. Game Over!");
+            choice2.setText("Continue");
+            choice1.setVisible(false);
+            choice3.setVisible(false);
+            choice4.setVisible(false);
+        }
+    }
+    
+    public void nextLevel()
+    {
+        position = "next level";
+
+        if(level < 5)
+        {
+            level+=1;
+            OpponentFactory opponentFactory = new OpponentFactory();
+            newOpponent = opponentFactory.getOpponent(level);
+            newJavamon = new MainJavamon(level);
+            hpLabelNumber.setText("" + newJavamon.getJavamon().getHP());
+            mainTextArea.setText("Your opponent has been defeated. Nice job!\n Your Javamon has evolved into " +newJavamon.get_name()+"\n Your next opponent is " + newOpponent.get_name());
+            choice1.setText("Continue");
+            choice2.setVisible(false);
+            choice3.setVisible(false);
+            choice4.setVisible(false);
+        } else {
+            mainTextArea.setText("You have defeated all the opponents and graduated. You win!");
+            choice2.setText("Continue");
+            choice1.setVisible(false);
+            choice3.setVisible(false);
+            choice4.setVisible(false);
+        }
+    }
+
+    public void getReward(){
+        position = "reward";
+
+        mainTextArea.setText("You have been rewarded with a choice between the following items: ");
+        choice1.setText("Get weapon(Bonus damage)");
+        choice2.setText("Get a mystery item");
+        choice3.setText("Get a new javamon");
+        choice4.setText("Get a new life");
+    }
     public class TitleScreenHandler implements ActionListener{
         public void actionPerformed(ActionEvent event){
             createGameScreen();
             name = inputTextField.getText();
             System.out.println(name);
             playerLabelName.setText(name);
-            hpLabelNumber.setText("100");
-
-            // OpponentFactory opponentFactory = new OpponentFactory();
-            // Moves newOpponent = opponentFactory.getOpponent(1);
-            // System.out.println(newOpponent.get_name());
+            hpLabelNumber.setText(newJavamon.getJavamon().getHP() + "");
         }
     }
-
-
-    void setOptions(String c1, String c2, String c3, String c4)
-    {
-        choice1.setText(c1);
-		choice2.setText(c2);
-		choice3.setText(c3);
-		choice4.setText(c4);
-    }
-
-    public void selectJavamon()
-    {
-        position = "player turn";
-        mainTextArea.setText("Hi! Welcome to the game. I'm rohith. Please select a javamon.");
-        setOptions("Squirtle", "Chamander", "Gogul", ".");
-        
-        // selectJavamon(yourChoice);
-        position = "player turn";
-    }
-
-    public void createOpponent()
-    {
-        OpponentFactory opponentFactory = new OpponentFactory();
-        Moves newOpponent = opponentFactory.getOpponent(1);
-        System.out.println(newOpponent.get_name()); 
-    }
-
-
-    public void playerMove()
-    {
-        position = "player turn";
-        System.out.println(newOpponent.get_hp());
-        if(newOpponent.get_hp() > 0)
-        {
-            mainTextArea.setText("Your opponent is " + newOpponent.get_name() +"\n Opponent Health:" + newOpponent.get_hp() +"\n Choose a move");
-            choice1.setText("Attack");
-            choice2.setText("Defend");
-            choice3.setText("Use Item");
-            choice4.setText("Run away");
-            newOpponent.receive_attack(10, 0);
-            System.out.println(newOpponent.get_hp());
-        }
-        else 
-        {
-            mainTextArea.setText("Your opponent has been defeated. Nice job!");
-            setOptions("Continue", "Continue", "Continue", "Continue");
-            position = "get reward";
-        }
-
-    }
-
-    public void opponentMove(){}
 
     public class ChoiceHandler implements ActionListener
     {
 		public void actionPerformed(ActionEvent event)
         {
             String yourChoice = event.getActionCommand();
-            position = "Menu";
             switch(position)
             {
-                case "Quit" : 
-                    window.dispose();
-                    break;
                 case "Menu":
-                    selectJavamon();
+                    // selectJavamon();
                     switch(yourChoice)
                     {
                         case "c1":
-                            // mainTextArea.setText("You have selected Squirtle");
-                            playerMove();
-                            newOpponent.receive_attack(10, 0);
-                            break;
-                        case "c2":
-                            // mainTextArea.setText("You have selected Chamander");                            
-                            break;
-                        case "c3":
-                            // mainTextArea.setText("You have selected Gogul");
-                            break;
-                        case "c4":
-                            // mainTextArea.setText("You have selected .");
-                            position = "player turn";
-                            break;
+                            choice2.setVisible(true);
+                            choice3.setVisible(true);
+                            choice4.setVisible(true);
+                            playerMove();break;
                     }
-                    position = "player turn";
                     break;
                 case "player turn":
-                    if(newOpponent.get_hp() > 0)
+                    switch(yourChoice)
                     {
-                        switch(yourChoice)
-                        {
-                            case "Attack":
-                                newOpponent.receive_attack(10, 0);
-                                break;
-                            case "Defend":
-                                break;
-                            case "Use Item":
-                                break;
-                            case "Run away":
-                                break;
-                        }
+                        case "c1":
+                            newOpponent.receive_attack(newJavamon.get_atk_pow(), newJavamon.get_attribute());
+                            if(newOpponent.get_hp() <= 0)
+                            {
+                                nextLevel();
+                            }
+                            else
+                            {
+                                choice2.setVisible(true);
+                                choice3.setVisible(true);
+                                choice4.setVisible(true);
+                                playerAttack();
+                                opponentTurn();break;
+                            }
+                            break;
+                        case "c2":
+                            playerDefend();
+                            opponentTurn();
+                            break;
+                        case "c3":
+                            break;
+                        case "c4":
+                            break;
                     }
+                    break;
                 case "opponent turn":
-                    opponentMove();
+                    switch(yourChoice)
+                    {
+                        case "c1":
+                            choice2.setVisible(true);
+                            choice3.setVisible(true);
+                            choice4.setVisible(true);
+                            playerAttack();break;
+                        case "c2":
+                            choice1.setVisible(true);
+                            choice3.setVisible(true);
+                            choice4.setVisible(true);
+                            window.dispose();
+                            break;
+                    }
+                    break;
+                case "next level":
+                    switch(yourChoice)
+                    {
+                        case "c1":
+                            choice2.setVisible(true);
+                            choice3.setVisible(true);
+                            choice4.setVisible(true);
+                            playerMove();
+                            break;
+                    }
                     break;
             }
 		}
@@ -343,7 +398,11 @@ public class GameLoop {
     public static void main(String[] args) 
     {
         OpponentFactory opponentFactory = new OpponentFactory();
-        newOpponent = opponentFactory.getOpponent(1);
+        newOpponent = opponentFactory.getOpponent(level);
+        // MainJavamon generate_javamon = new MainJavamon(level);
+        // newJavamon = generate_javamon.getJavamon();
+        // newJavamon = javamon.MainJavamon(level);
+        newJavamon = new MainJavamon(level);
 		new GameLoop();
 	}
 }

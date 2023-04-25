@@ -5,7 +5,6 @@ public class HealthPotion implements PowerUp {
 
     public int increase_hp(){
         return 5;
-
     }
 
     public int increase_atkpower() {

@@ -15,8 +15,8 @@ public class Villain implements Moves {
   public Villain() {
     name = "rajkumari";
     attribute = 2;
-    hp = 200;
-    atk_pow = 15;
+    hp = 150;
+    atk_pow = 10;
     def_pow = 4;
     power_up = 2;
   }

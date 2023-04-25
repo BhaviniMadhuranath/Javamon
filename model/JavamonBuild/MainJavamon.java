@@ -25,7 +25,7 @@ public class MainJavamon implements Moves {
     Javamon javamon;
     javamonBuilder one;
 
-    public Javamon MainJavamon(int level) {
+    public MainJavamon(int level) {
         // level 1
         if (level == 1) {
           one = new googul();
@@ -40,13 +40,17 @@ public class MainJavamon implements Moves {
              one = new bumblebee();
         }
         if (level == 5) {
-           one = new chotmensinkai();
+           one = new ved();
         }
-        
+        // this.javamon = one.getJavamon();
         selector selectone = new selector(one);
         selectone.constructJavamon();
-        Javamon javamon = selectone.getJavamon();
-        return javamon;
+        this.javamon = selectone.getJavamon();
+        // return javamon;
+      }
+
+      public Javamon getJavamon() {
+        return this.javamon;
       }
 
       @Override
@@ -75,6 +79,14 @@ public class MainJavamon implements Moves {
         }
         // buffer resets to zero after the round regardless of amount used
         javamon.buffer = 0;
+      }
+      public int get_atk_pow()
+      {
+        return javamon.atk_pow;
+      }
+      public int get_attribute()
+      {
+        return javamon.attribute;
       }
       @Override
       public int launch_attack() {
