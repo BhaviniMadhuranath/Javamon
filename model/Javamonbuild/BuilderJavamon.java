@@ -6,6 +6,9 @@ public void setHP(int hp);
 public void setAttackPower(int atk_pow);
 public void setAttribute(int attribute);
 public void setLevel(int level);
+public void setBuffer(int buffer);
+public void setDefencePower(int def_pow);
+
 }
 
 //0-fire
@@ -18,6 +21,8 @@ class Javamon implements javamonPlan
     public int atk_pow;
     public int attribute;
     public int level;
+    public int buffer;
+    public int def_pow;
     public void setName(String name)
     {
         this.name=name;
@@ -38,6 +43,15 @@ class Javamon implements javamonPlan
     {
         this.level=level;
     }
+    public void setBuffer(int buffer)
+    {
+        this.buffer=buffer;
+    }
+    public void setDefencePower(int def_pow)
+    {
+        this.def_pow=def_pow;
+    }
+
 }
 
 interface javamonBuilder
@@ -47,6 +61,9 @@ interface javamonBuilder
     public void buildAttackPower();
     public void buildAttribute();
     public void buildLevel();
+    public void buildBuffer();
+    public void buildDefencePower();
+
     public Javamon getJavamon();
  
 }
@@ -77,10 +94,20 @@ class googul implements javamonBuilder
     {
         javamon.setLevel(1);
     }
+    public void buildBuffer()
+    {
+        javamon.setBuffer(0);
+    }
+    public void buildDefencePower()
+    {
+        javamon.setDefencePower(10);
+    }
     public Javamon getJavamon()
     {
         return this.javamon;
     }
+
+    
 }
 
 class panda implements javamonBuilder
@@ -108,6 +135,14 @@ class panda implements javamonBuilder
     public void buildLevel()
     {
         javamon.setLevel(2);
+    }
+    public void buildBuffer()
+    {
+        javamon.setBuffer(0);
+    }
+    public void buildDefencePower()
+    {
+        javamon.setDefencePower(12);
     }
     public Javamon getJavamon()
     {
@@ -140,6 +175,14 @@ class pokirimaan implements javamonBuilder
     {
         javamon.setLevel(3);
     }
+    public void buildBuffer()
+    {
+        javamon.setBuffer(0);
+    }
+    public void buildDefencePower()
+    {
+        javamon.setDefencePower(15);
+    }
     public Javamon getJavamon()
     {
         return this.javamon;
@@ -170,6 +213,14 @@ class bumblebee implements javamonBuilder
     public void buildLevel()
     {
         javamon.setLevel(4);
+    }
+    public void buildBuffer()
+    {
+        javamon.setBuffer(0);
+    }
+    public void buildDefencePower()
+    {
+        javamon.setDefencePower(17);
     }
     public Javamon getJavamon()
     {
@@ -202,10 +253,19 @@ class chotmensinkai implements javamonBuilder
     {
         javamon.setLevel(5);
     }
+    public void buildBuffer()
+    {
+        javamon.setBuffer(0);
+    }
+    public void buildDefencePower()
+    {
+        javamon.setDefencePower(18);
+    }
     public Javamon getJavamon()
     {
         return this.javamon;
     }
+    
 }
 class ved implements javamonBuilder
 {
@@ -233,6 +293,14 @@ class ved implements javamonBuilder
     {
         javamon.setLevel(5);
     }
+    public void buildBuffer()
+    {
+        javamon.setBuffer(0);
+    }
+    public void buildDefencePower()
+    {
+        javamon.setDefencePower(19);
+    }
     public Javamon getJavamon()
     {
         return this.javamon;
@@ -252,13 +320,16 @@ class selector
     {
         return this.javamonbuilder.getJavamon();
     }
-    public void contructJavamon()
+    public void constructJavamon()
     {
         this.javamonbuilder.buildAttackPower();
         this.javamonbuilder.buildAttribute();
         this.javamonbuilder.buildHp();
         this.javamonbuilder.buildName();
         this.javamonbuilder.buildLevel();
+        this.javamonbuilder.buildBuffer();
+        this.javamonbuilder.buildDefencePower();
+
     }
 }
 
