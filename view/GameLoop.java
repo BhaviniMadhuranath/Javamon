@@ -197,6 +197,17 @@ public class GameLoop {
         selectJavamon();
     }
 
+    String getAttributeName(int n)
+    {
+        if(n == 0)
+            return "Fire";
+        else if(n == 1)
+            return "Water";
+        else if(n == 2)
+            return "Grass";
+        return "Invalid attribute";
+    }
+
     public void selectJavamon()
     {
         position = "Menu";
@@ -215,7 +226,7 @@ public class GameLoop {
             position = "player turn";
             // System.out.println(newOpponent.get_hp());
         
-            mainTextArea.setText("Your javamon is "+newJavamon.get_name()+"\nYour opponent is " + newOpponent.get_name() +"\n Opponent Health:" + newOpponent.get_hp() +"\n Choose a move");
+            mainTextArea.setText("Your javamon is "+newJavamon.get_name() +"  Attribute: "+ getAttributeName(newJavamon.get_attribute()) +"\nYour opponent is " + newOpponent.get_name() +"\n Opponent Health:" + newOpponent.get_hp() +"\n Choose a move");
             choice1.setText("Attack");
             choice2.setText("Defend");
             choice3.setText("Use Item");
@@ -228,7 +239,7 @@ public class GameLoop {
     {
         position = "player turn";
 
-        mainTextArea.setText("Your javamon is "+newJavamon.get_name()+"\nYour opponent is " + newOpponent.get_name() +"\n Opponent Health:" + newOpponent.get_hp() +"\n Choose a move");
+        mainTextArea.setText("Your javamon is "+newJavamon.get_name()+"  Attribute: "+ getAttributeName(newJavamon.get_attribute()) +"\nYour opponent is " + newOpponent.get_name() +"\n Opponent Health:" + newOpponent.get_hp() +"\n Choose a move");
         choice1.setText("Attack");
         choice2.setText("Defend");
         choice3.setText("Use Item");
@@ -239,7 +250,7 @@ public class GameLoop {
     {
         position = "player defend";
         newJavamon.defend();
-        mainTextArea.setText("Your javamon is "+newJavamon.get_name()+"\nYour opponent is " + newOpponent.get_name() +"\n Opponent Health:" + newOpponent.get_hp() +"\n You defended \nChoose a move");
+        mainTextArea.setText("Your javamon is "+newJavamon.get_name()+"  Attribute: "+ getAttributeName(newJavamon.get_attribute()) +"\nYour opponent is " + newOpponent.get_name() +"\n Opponent Health:" + newOpponent.get_hp() +"\n You defended \nChoose a move");
         choice1.setText("Attack");
         choice2.setText("Defend");
         choice3.setText("Use Item");
@@ -258,7 +269,7 @@ public class GameLoop {
         // newJavamon.getJavamon().setHP(playerHealth);
         hpLabelNumber.setText("" + newJavamon.getJavamon().getHP());
         if(playerHealth > 0){
-            mainTextArea.setText("Your javamon is "+newJavamon.get_name()+"\nYour opponent is " + newOpponent.get_name() +"\n Opponent Health:" + newOpponent.get_hp() +"\nYour opponent attacked you!"+"\n Choose a move");
+            mainTextArea.setText("Your javamon is "+newJavamon.get_name()+"  Attribute: "+ getAttributeName(newJavamon.get_attribute()) +"\nYour opponent is " + newOpponent.get_name() +"\n Opponent Health:" + newOpponent.get_hp() +"\nYour opponent attacked you!"+"\n Choose a move");
             choice1.setText("Continue");
             choice2.setVisible(false);
             choice3.setVisible(false);

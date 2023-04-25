@@ -59,6 +59,6 @@ public class Pinguva implements Moves {
     name = "Pinguva";
     attribute = 0;
     atk_pow = 7;
-    hp = 60;
+    hp = 55;
   }
 }
