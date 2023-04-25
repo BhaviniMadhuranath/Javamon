@@ -2,7 +2,6 @@ package Javamon.model.OpponentBuild;
 
 import Javamon.model.Moves;
 import java.util.Random;
-
 public class OpponentFactory {
 
   Random rand = new Random();

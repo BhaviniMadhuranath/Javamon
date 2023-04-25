@@ -20,20 +20,9 @@ public interface Moves {
   // passing the attack strength of the attacker as an argument and altering the hp of the attacked
   public void receive_attack(int atk, int attr);
 
-<<<<<<< HEAD
-  public default int launch_attack() {
-    return this.atk_pow;
-  }
-  error: cannot find symbol
-  this.buffer -= atk;
-  public default int get_hp() {
-    return this.hp;
-  }
-=======
   public int launch_attack();
 
   public int get_hp();
->>>>>>> b669fd3b1120aea0aaa217a4f727762635b6a00c
 
   public int get_def_pow();
 

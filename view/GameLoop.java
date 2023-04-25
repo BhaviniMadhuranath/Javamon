@@ -1,6 +1,6 @@
 package Javamon.view;
-// import Javamon.model.Moves;
-// import Javamon.model.OpponentBuild.OpponentFactory;
+import Javamon.model.Moves;
+import Javamon.model.OpponentBuild.OpponentFactory;
 
 import java.awt.Color;
 import java.awt.Container;
@@ -16,12 +16,15 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+
+
 /*
     Run Commands:
 
  * javac -d . GameLoop.java
  * java Javamon.view.GameLoop
  */
+
 
 public class GameLoop {
     JFrame window;
@@ -31,12 +34,12 @@ public class GameLoop {
 	Font titleFont = new Font("Times New Roman", Font.PLAIN, 90);
 	Font normalFont = new Font("Times New Roman", Font.PLAIN, 28);
 	JButton startButton, choice1, choice2, choice3, choice4;
-    String position = "menu";
     JTextArea mainTextArea;
     JTextField inputTextField;
     TitleScreenHandler tsHandler = new TitleScreenHandler();
 	ChoiceHandler choiceHandler = new ChoiceHandler();
-
+    
+    String position = "menu";
     static int level;
     int score;
     String name;
@@ -238,34 +241,115 @@ public class GameLoop {
 		choice4.setText(c4);
     }
 
-    public void selectJavamon(String javamon_name)
+    public void selectJavamon()
     {
-        // initialize selected javamon to player
-        position = "Game";
+        position = "player turn";
+        mainTextArea.setText("Hi! Welcome to the game. I'm rohith. Please select a javamon.");
+        setOptions("Squirtle", "Chamander", "Gogul", ".");
+        
+        // selectJavamon(yourChoice);
+        position = "player turn";
     }
 
-    public class ChoiceHandler implements ActionListener{
-		
-		public void actionPerformed(ActionEvent event){
+    public void createOpponent()
+    {
+        OpponentFactory opponentFactory = new OpponentFactory();
+        Moves newOpponent = opponentFactory.getOpponent(1);
+        System.out.println(newOpponent.get_name()); 
+    }
 
+    OpponentFactory opponentFactory = new OpponentFactory();
+    Moves newOpponent = opponentFactory.getOpponent(1);
+
+    public void playerMove()
+    {
+        position = "player turn";
+        System.out.println(newOpponent.get_hp());
+        if(newOpponent.get_hp() > 0)
+        {
+            mainTextArea.setText("Your opponent is " + newOpponent.get_name() +"\n Opponent Health:" + newOpponent.get_hp() +"\n Choose a move");
+            choice1.setText("Attack");
+            choice2.setText("Defend");
+            choice3.setText("Use Item");
+            choice4.setText("Run away");
+            newOpponent.receive_attack(10, 0);
+            System.out.println(newOpponent.get_hp());
+        }
+        else 
+        {
+            mainTextArea.setText("Your opponent has been defeated. Nice job!");
+            setOptions("Continue", "Continue", "Continue", "Continue");
+        }
+        // if(newOpponent.get_hp() > 0)
+        // {
+            // switch(yourChoice)
+            // {
+            //     case "Attack":
+            //         newOpponent.receive_attack(10, 0);
+            //         break;
+            //     case "Defend":
+            //         break;
+            //     case "Use Item":
+            //         break;
+            //     case "Run away":
+            //         break;
+            // }
+        // }
+    }
+
+    public void opponentMove(){}
+
+    public class ChoiceHandler implements ActionListener
+    {
+		public void actionPerformed(ActionEvent event)
+        {
             String yourChoice = event.getActionCommand();
+            
             position = "Menu";
-			switch(position){
-                case "Menu" : 
-                    mainTextArea.setText("Hi! Welcome to the game. I'm rohith. Please select a javamon.");
-                    setOptions("Squirtle", "Chamander", "Gogul", ".");
-                    selectJavamon(yourChoice);	
-                    break;
+            switch(position)
+            {
                 case "Quit" : 
                     window.dispose();
                     break;
-                case "Game": 
-                    while(boss_defeated != 0){
-
+                case "Menu":
+                    selectJavamon();
+                    switch(yourChoice)
+                    {
+                        case "c1":
+                            // mainTextArea.setText("You have selected Squirtle");
+                            playerMove();
+                            newOpponent.receive_attack(10, 0);
+                            break;
+                        case "c2":
+                            // mainTextArea.setText("You have selected Chamander");                            
+                            break;
+                        case "c3":
+                            // mainTextArea.setText("You have selected Gogul");
+                            break;
+                        case "c4":
+                            // mainTextArea.setText("You have selected .");
+                            position = "player turn";
+                            break;
                     }
-                    break; 
+                    position = "player turn";
+                    break;
+                case "player turn": 
+                    switch(yourChoice)
+                    {
+                        case "Attack":
+                            newOpponent.receive_attack(10, 0);
+                            break;
+                        case "Defend":
+                            break;
+                        case "Use Item":
+                            break;
+                        case "Run away":
+                            break;
+                    }
+                case "opponent turn":
+                    opponentMove();
+                    break;
             }
-			
 		}
 	}
 
