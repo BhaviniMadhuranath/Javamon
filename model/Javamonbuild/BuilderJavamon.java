@@ -23,6 +23,13 @@ class Javamon implements javamonPlan
     public int level;
     public int buffer;
     public int def_pow;
+    public int skinpotion=0;
+    public int healthpotion=0;
+    public int strengthpotion=0;
+    public boolean shield=false;
+    public boolean sword=false;
+
+
     public void setName(String name)
     {
         this.name=name;
@@ -47,6 +54,7 @@ class Javamon implements javamonPlan
     {
         this.buffer=buffer;
     }
+    
     public void setDefencePower(int def_pow)
     {
         this.def_pow=def_pow;
