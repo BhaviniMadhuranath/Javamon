@@ -1,5 +1,4 @@
 package Javamon.model.JavamonBuild;
-import java.util.HashSet;
 import java.util.Random;
 import Javamon.model.Moves;
 import Javamon.model.ItemBuild.HealthPotion;

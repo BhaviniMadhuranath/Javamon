@@ -1,5 +1,4 @@
 package Javamon.model.ItemBuild;
-
 import Javamon.model.PowerUp;
 
 public class HealthPotion implements PowerUp {
@@ -9,13 +8,12 @@ public class HealthPotion implements PowerUp {
 
     }
 
-    @Override
     public int increase_atkpower() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'increase_atkpower'");
     }
 
-    @Override
+    
     public int increase_defpower() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'increase_defpower'");
