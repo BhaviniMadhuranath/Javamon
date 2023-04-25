@@ -27,7 +27,9 @@ public class SeaHag implements Moves {
     this.hp = this.hp - atk;
     // buffer resets to zero after the round regardless of amount used
   }
-
+  public int get_attribute() {
+    return this.attribute;
+  }
   public void special(int opt) {
     System.out.println("Does not have special powers");
   }

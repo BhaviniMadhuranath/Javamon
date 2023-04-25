@@ -20,6 +20,8 @@ public interface Moves {
   // passing the attack strength of the attacker as an argument and altering the hp of the attacked
   public void receive_attack(int atk, int attr);
 
+  public int get_attribute();
+
   public int launch_attack();
 
   public int get_hp();

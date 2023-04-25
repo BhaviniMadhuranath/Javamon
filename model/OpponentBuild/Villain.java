@@ -52,6 +52,10 @@ public class Villain implements Moves {
     return this.atk_pow;
   }
 
+  public int get_attribute() {
+    return this.attribute;
+  }
+
   public int get_hp() {
     return this.hp;
   }

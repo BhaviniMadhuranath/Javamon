@@ -1,6 +1,5 @@
 package Javamon.view;
 import Javamon.model.Moves;
-import Javamon.model.JavamonBuild.Javamon;
 import Javamon.model.JavamonBuild.MainJavamon;
 import Javamon.model.OpponentBuild.OpponentFactory;
 
@@ -10,8 +9,6 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.logging.Level;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -254,9 +251,11 @@ public class GameLoop {
     {
         position = "opponent turn";
         int atk = newOpponent.launch_attack();
+        
+        newJavamon.receive_attack(atk, newOpponent.get_attribute());
         int playerHealth = newJavamon.getJavamon().getHP();
-        playerHealth -= atk;
-        newJavamon.getJavamon().setHP(playerHealth);
+        // playerHealth -= atk;
+        // newJavamon.getJavamon().setHP(playerHealth);
         hpLabelNumber.setText("" + newJavamon.getJavamon().getHP());
         if(playerHealth > 0){
             mainTextArea.setText("Your javamon is "+newJavamon.get_name()+"\nYour opponent is " + newOpponent.get_name() +"\n Opponent Health:" + newOpponent.get_hp() +"\nYour opponent attacked you!"+"\n Choose a move");
@@ -388,6 +387,9 @@ public class GameLoop {
                             choice3.setVisible(true);
                             choice4.setVisible(true);
                             playerMove();
+                            break;
+                        case "c2":
+                            window.dispose();
                             break;
                     }
                     break;

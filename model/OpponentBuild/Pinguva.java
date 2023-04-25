@@ -35,7 +35,9 @@ public class Pinguva implements Moves {
   public void defend() {
     System.out.println("Does not have defensive powers");
   }
-
+  public int get_attribute() {
+    return this.attribute;
+  }
   public int get_hp() {
     return this.hp;
   }

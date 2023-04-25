@@ -1,0 +1,1 @@
+javac -d . ./model/*.java && javac -d . ./model/*/*.java && javac -d . ./view/*.java && java Javamon.view.GameLoop

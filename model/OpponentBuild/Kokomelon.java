@@ -53,7 +53,9 @@ public class Kokomelon implements Moves {
   public String get_name() {
     return this.name;
   }
-
+  public int get_attribute() {
+    return this.attribute;
+  }
   public Kokomelon() {
     name = "Kokomelon";
     attribute = 0;
