@@ -1,4 +1,4 @@
-package Javamon.model.Javamonbuild;
+package Javamon.model.JavamonBuild;
 import java.util.Random;
 import Javamon.model.Moves;
 

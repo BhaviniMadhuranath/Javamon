@@ -1,4 +1,4 @@
-package Javamon.model.Javamonbuild;
+package Javamon.model.JavamonBuild;
 //builder design pattern
 interface javamonPlan {
 public void setName(String name);
