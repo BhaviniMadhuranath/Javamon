@@ -1,1 +1,5 @@
-javac -d . ./model/*.java && javac -d . ./model/*/*.java && javac -d . ./view/*.java && java Javamon.view.GameLoop
+# a script to compile all java files with javac
+# and run the program with the given arguments
+#
+
+javac -d . *.java

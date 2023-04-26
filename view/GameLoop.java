@@ -2,13 +2,20 @@ package Javamon.view;
 import Javamon.model.Moves;
 import Javamon.model.JavamonBuild.MainJavamon;
 import Javamon.model.OpponentBuild.OpponentFactory;
-
+// import Javamon.src.*;
+import java.sql.*;
+// import java.sql.Connection;
+// import java.sql.DriverManager;
+// import java.sql.SQLException;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -61,7 +68,7 @@ public class GameLoop {
 		titleNamePanel = new JPanel();
 		titleNamePanel.setBounds(100, 100, 600, 150);
 		titleNamePanel.setBackground(Color.black);
-		titleNameLabel = new JLabel("ADVENTURE");
+		titleNameLabel = new JLabel("JAVAMON");
 		titleNameLabel.setForeground(Color.white);
 		titleNameLabel.setFont(titleFont);	
 		
@@ -194,7 +201,7 @@ public class GameLoop {
     void initialize() {
         level = 1;
         score = 0;
-        selectJavamon();
+        mainMenu();
     }
 
     String getAttributeName(int n)
@@ -206,6 +213,19 @@ public class GameLoop {
         else if(n == 2)
             return "Grass";
         return "Invalid attribute";
+    }
+
+    public void mainMenu()
+    {
+        position = "mainMenu";
+        mainTextArea.setText("Welcome to Javamon\n\n");
+        choice1.setText("Start Game");
+        choice2.setVisible(true);
+        choice2.setText("Tutorial");
+        choice3.setVisible(true);
+        choice3.setText("Leaderboard");
+        choice4.setVisible(true);
+        choice4.setText("Quit");
     }
 
     public void selectJavamon()
@@ -318,6 +338,84 @@ public class GameLoop {
         choice3.setText("Get a new javamon");
         choice4.setText("Get a new life");
     }
+
+    public static ResultSet retrieveLeaderboard()
+        throws SQLException, ClassNotFoundException {
+        Connection connection = null;
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        connection =
+        DriverManager.getConnection(
+            "jdbc:mysql://localhost:3306/javamon",
+            "root",
+            "nugget"
+        );
+        Statement statement;
+        statement = connection.createStatement();
+        ResultSet resultSet;
+        resultSet =
+        statement.executeQuery("select * from playerscore order by score desc");
+        return resultSet;
+    }
+
+    public static void addToLeaderboard(String name, int score)
+    throws SQLException, ClassNotFoundException {
+    Connection connection = null;
+    Class.forName("com.mysql.cj.jdbc.Driver");
+    connection =
+      DriverManager.getConnection(
+        "jdbc:mysql://localhost:3306/javamon",
+        "root",
+        "nugget"
+      );
+    Statement statement;
+    statement = connection.createStatement();
+    String query =
+      "insert into playerscore(name,score) values(\"" +
+      name +
+      "\"," +
+      score +
+      ");";
+    System.out.println(query);
+    int result;
+    result = statement.executeUpdate(query);
+  }
+
+    public void Leaderboard() {
+        mainTextArea.setText("Leaderboard");
+        choice1.setVisible(false);
+        choice2.setVisible(false);
+        choice3.setVisible(false);
+        choice4.setVisible(false);
+
+        JPanel panel = new JPanel();
+        
+        panel.setLayout((LayoutManager) new BoxLayout(panel, BoxLayout.Y_AXIS));
+        // create a iterable with player name and score
+        try {
+            addToLeaderboard("Ayushmaan",10);
+            addToLeaderboard("Bhavini",10);
+            addToLeaderboard("Gowri",10);
+            ResultSet resultSet = retrieveLeaderboard();
+            while (resultSet.next()) {
+                int code = resultSet.getInt("code");
+                String name = resultSet.getString("name");
+                int score = resultSet.getInt("score");
+                JLabel label = new JLabel(name + " " + score);
+                panel.add(label);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+    public void tutorial() {
+        position = "tutorial";
+        mainTextArea.setText("Tutorial\nDefeat all the monsters to win!\nChoose between attack and defense\nJavamons evolve after every victory\n");
+        choice1.setText("Continue");
+        choice2.setVisible(false);
+        choice3.setVisible(false);
+        choice4.setVisible(false);
+    }
+
     public class TitleScreenHandler implements ActionListener{
         public void actionPerformed(ActionEvent event){
             createGameScreen();
@@ -335,6 +433,26 @@ public class GameLoop {
             String yourChoice = event.getActionCommand();
             switch(position)
             {
+                case "mainMenu":
+                    switch(yourChoice)
+                    {
+                        case "c1":
+                            selectJavamon();break;
+                        case "c2":tutorial();break;
+                        case "c3":Leaderboard();break;
+                        case "c4":break;
+                    }
+                    break;
+                case "Tutorial":
+                    switch(yourChoice)
+                    {
+                        case "c1":
+                            choice2.setVisible(true);
+                            choice3.setVisible(true);
+                            choice4.setVisible(true);
+                            mainMenu();break;
+                    }
+                    break;
                 case "Menu":
                     // selectJavamon();
                     switch(yourChoice)
@@ -416,6 +534,109 @@ public class GameLoop {
         // newJavamon = generate_javamon.getJavamon();
         // newJavamon = javamon.MainJavamon(level);
         newJavamon = new MainJavamon(level);
+        // ResultSet resultSet = dbconnectivity.retrieveLeaderboard();
+        // while (resultSet.next()) {
+        //     int code = resultSet.getInt("ID");
+        //     String title = resultSet.getString("name").trim();
+        //     int score = resultSet.getInt("score");
+        //     System.out.println(
+        //     "Code : " + code + " Title : " + title + " Score : " + score
+        //     );
+        // }
 		new GameLoop();
 	}
 }
+
+class dbconnectivity {
+
+  public static ResultSet retrieveLeaderboard()
+    throws SQLException, ClassNotFoundException {
+    Connection connection = null;
+    Class.forName("com.mysql.cj.jdbc.Driver");
+    connection =
+      DriverManager.getConnection(
+        "jdbc:mysql://localhost:3306/javamon",
+        "root",
+        "nugget"
+      );
+    Statement statement;
+    statement = connection.createStatement();
+    ResultSet resultSet;
+    resultSet =
+      statement.executeQuery("select * from playerscore order by score desc");
+    return resultSet;
+  }
+
+  // use this to check if name exists in leaderboard to determine if create or update should be called
+  public static int checkLeaderboard(String name)
+    throws SQLException, ClassNotFoundException {
+    Connection connection = null;
+    Class.forName("com.mysql.cj.jdbc.Driver");
+    connection =
+      DriverManager.getConnection(
+        "jdbc:mysql://localhost:3306/javamon",
+        "root",
+        "nugget"
+      );
+    Statement statement;
+    statement = connection.createStatement();
+    String query = "select * from playerscore where name =\"" + name + "\";";
+    System.out.println(query);
+    ResultSet result;
+    result = statement.executeQuery(query);
+    if (result.next() == false) {
+      return 0;
+    }
+    return 1;
+  }
+
+  public static void updateLeaderboard(String name, int score)
+    throws SQLException, ClassNotFoundException {
+    Connection connection = null;
+    Class.forName("com.mysql.cj.jdbc.Driver");
+    connection =
+      DriverManager.getConnection(
+        "jdbc:mysql://localhost:3306/javamon",
+        "root",
+        "nugget"
+      );
+    Statement statement;
+    statement = connection.createStatement();
+    String query =
+      "update playerscore set score=" +
+      score +
+      " where name =\"" +
+      name +
+      "\";";
+    System.out.println(query);
+    int result;
+    result = statement.executeUpdate(query);
+  }
+
+  public static void addToLeaderboard(String name, int score)
+    throws SQLException, ClassNotFoundException {
+    Connection connection = null;
+    Class.forName("com.mysql.cj.jdbc.Driver");
+    connection =
+      DriverManager.getConnection(
+        "jdbc:mysql://localhost:3306/javamon",
+        "root",
+        "nugget"
+      );
+    Statement statement;
+    statement = connection.createStatement();
+    String query =
+      "insert into playerscore(name,score) values(\"" +
+      name +
+      "\"," +
+      score +
+      ");";
+    System.out.println(query);
+    int result;
+    result = statement.executeUpdate(query);
+  }
+
+ // function ends
+} // class ends
+
+

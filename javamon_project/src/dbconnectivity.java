@@ -2,6 +2,10 @@
 
 import java.sql.*;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
 public class dbconnectivity {
 
   public static ResultSet retrieveLeaderboard()
@@ -12,7 +16,7 @@ public class dbconnectivity {
       DriverManager.getConnection(
         "jdbc:mysql://localhost:3306/javamon",
         "root",
-        "alohomora"
+        "nugget"
       );
     Statement statement;
     statement = connection.createStatement();
@@ -31,7 +35,7 @@ public class dbconnectivity {
       DriverManager.getConnection(
         "jdbc:mysql://localhost:3306/javamon",
         "root",
-        "alohomora"
+        "nugget"
       );
     Statement statement;
     statement = connection.createStatement();
@@ -53,7 +57,7 @@ public class dbconnectivity {
       DriverManager.getConnection(
         "jdbc:mysql://localhost:3306/javamon",
         "root",
-        "alohomora"
+        "nugget"
       );
     Statement statement;
     statement = connection.createStatement();
@@ -76,7 +80,7 @@ public class dbconnectivity {
       DriverManager.getConnection(
         "jdbc:mysql://localhost:3306/javamon",
         "root",
-        "alohomora"
+        "nugget"
       );
     Statement statement;
     statement = connection.createStatement();
@@ -113,7 +117,7 @@ public class dbconnectivity {
       //  resultSet = statement.executeQuery("select * from playerscore");
       int code, score;
       String title;
-      updateLeaderboard("Gowri", 20);
+      addToLeaderboard("Gowri", 20);
       ResultSet resultSet = retrieveLeaderboard();
       while (resultSet.next()) {
         code = resultSet.getInt("ID");
