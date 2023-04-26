@@ -55,7 +55,6 @@ public class MainJavamon implements Moves {
         return this.javamon;
       }
 
-      @Override
       public int check_attr(int attr) {
         if (javamon.attribute == 0 && attr == 1) {
           return 5;
@@ -68,7 +67,6 @@ public class MainJavamon implements Moves {
         return 0;
       }
 
-      @Override
       public void receive_attack(int atk, int attr) {
         int factor = check_attr(attr);
         atk = atk + factor;
@@ -90,27 +88,22 @@ public class MainJavamon implements Moves {
       {
         return javamon.attribute;
       }
-      @Override
       public int launch_attack() {
         return javamon.atk_pow;
       }
-      @Override
       public int get_hp() {
         return javamon.hp;
       }
     
-      @Override
       public int get_def_pow() {
         return javamon.def_pow;
       }
     
-      @Override
       // change default later
       public void defend() {
         javamon.buffer = javamon.def_pow;
       }
     
-      @Override
       public String get_name() {
         return javamon.name;
       }
