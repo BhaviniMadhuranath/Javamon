@@ -19,11 +19,11 @@ public class Javamon implements javamonPlan
     public int level;
     public int buffer;
     public int def_pow;
-    public int skinpotion=0;
-    public int healthpotion=0;
-    public int strengthpotion=0;
-    public boolean shield=false;
-    public boolean sword=false;
+//    public int skinpotion=0;
+//    public int healthpotion=0;
+//    public int strengthpotion=0;
+//    public boolean shield=false;
+//    public boolean sword=false;
 
 
     public void setName(String name)
