@@ -14,7 +14,6 @@ public class Shield implements PowerUp{
         throw new UnsupportedOperationException("Unimplemented method 'increase_atkpower'");
     }
 
-    @Override
     public int increase_defpower() {
         return 10;
     }
